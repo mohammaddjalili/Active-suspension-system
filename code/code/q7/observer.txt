@@ -1,0 +1,33 @@
+% Define parameters
+M1 = 700; 
+M2 = 90;
+K1 = 62000;
+K2 = 570000;
+b1 = 500;
+b2 = 22500;
+
+% Define system matrices
+A = [0 1 0 0;
+     0 0 -K1/M1 -b1/M1;
+     0 0 0 1;
+     K2/M2 b2/M2 -(K1/M2)-(K1/M1)-(K2/M2) -(b1/M1)-(b2/M2)-(b1/M2)];
+B1 = [0; 1/M1; 0; (1/M1) + (1/M2)];
+B2 = [0 0;
+      0 0;
+      0 0;
+     -K2/M2 -b2/M2];
+C = [0 0 1 0];
+D = 0;
+
+% Controllability and observability analysis
+phic = ctrb(A, B1);
+rank_phic = rank(phic);
+fprintf('Rank of the controllability matrix: %d\n', rank_phic);
+rank_obsv = rank(obsv(A, C));
+fprintf('Rank of the observability matrix: %d\n', rank_obsv);
+
+% Define desired poles and calculate observer gain
+P = 2*[-218, -31, -4.7+89.6i, -4.7-89.6i];
+L1 = acker(A', C', P);
+L = L1'
+
