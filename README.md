@@ -1,4 +1,4 @@
-# Active-suspension-# Active Suspension System for Tractors
+# Active Suspension System for Tractors
 
 ## Overview
 
